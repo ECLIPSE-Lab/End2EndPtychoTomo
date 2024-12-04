@@ -34,6 +34,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-e5daa5401275933e7c22e3bd6dee58ad.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="dark">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -155,13 +158,16 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="authors">Authors</h2>
 <div class="columns">
 <div class="column" style="width:33%;">
-<p><strong>Shengbo You</strong> <img src="images/authors/shengbo.jpg" class="img-fluid" width="120"></p>
+<p><strong>Shengbo You</strong></p>
+<p><a href="images/authors/shengbo.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="images/authors/shengbo.jpg" class="img-fluid" width="120"></a></p>
 <p><a href="https://orcid.org/0009-0008-0739-9903">ORCID</a></p>
 </div><div class="column" style="width:33%;">
-<p><strong>Andrey Romanov</strong> <img src="images/authors/andrey.jpg" class="img-fluid" width="120"></p>
+<p><strong>Andrey Romanov</strong></p>
+<p><a href="images/authors/andrey.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="images/authors/andrey.jpg" class="img-fluid" width="120"></a></p>
 <p><a href="https://www.linkedin.com/in/avmromanov/">LinkedIn</a></p>
 </div><div class="column" style="width:33%;">
-<p><strong>Philipp M. Pelz</strong> <img src="images/authors/pelz_philipp.jpg" class="img-fluid" width="120"></p>
+<p><strong>Philipp M. Pelz</strong></p>
+<p><a href="images/authors/pelz_philipp.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="images/authors/pelz_philipp.jpg" class="img-fluid" width="120"></a></p>
 <p><a href="https://scholar.google.com/citations?user=d-lXKR8AAAAJ&amp;hl=en">Google Scholar</a></p>
 </div>
 </div>
@@ -191,7 +197,7 @@ window.Quarto = {
 <section id="key-achievements" class="level2">
 <h2 class="anchored" data-anchor-id="key-achievements">Key Achievements</h2>
 <ul>
-<li><strong>Sub-Ångstrom Resolution</strong>: Achieved 0.82Å resolution in 3D with only 1/12th of the typical electron dose</li>
+<li><strong>Sub-Ångstrom Resolution</strong>: Achieved 0.82Å resolution in 3D with only <span class="math inline">\(5.2 × 10^4\, e/Å^2\)</span></li>
 <li><strong>Low Dose Performance</strong>: Demonstrated successful reconstruction at 2.84Å 3D resolution with just <span class="math inline">\(2.21 × 10^4\, e/Å^2\)</span> for the whole tilt series, which shows the potential of the method for high-resolution imaging with low electron dose</li>
 <li><strong>Missing Wedge Compensation</strong>: The multi-slice model successfully recovered atomic structure information in conventionally inaccessible directions without additional hardware or prior knowledge about the sample</li>
 <li><strong>Versatile Imaging</strong>: Demonstrated capability to image both heavy and light atoms in core-shell nanostructures in simulation</li>
@@ -649,6 +655,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
 
 
 
